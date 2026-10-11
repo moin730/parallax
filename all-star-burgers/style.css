@@ -1,0 +1,388 @@
+/* =================================================================
+   style.css: the LOOK of the page.
+   The CSS here describes the *starting* state (the dark hero).
+   script.js then animates things away from this state as you scroll.
+   ================================================================= */
+
+
+/* -----------------------------------------------------------------
+   1. VARIABLES
+   --bg and --ink are animated by script.js (dark -> light), and
+   everything that uses them changes colour automatically.
+   --bw is the burger width, used to size the whole scene.
+   ----------------------------------------------------------------- */
+:root {
+  --bg: #120d0b;        /* hero background (dark) */
+  --ink: #fff3dc;       /* text colour on the stage (light) */
+  --red: #e63b2e;
+  --gold: #ffc22e;
+  --cream: #fff3dc;
+  --brown: #1b120d;
+
+  /* min() picks the smallest value, so the burger never gets too big
+     for the screen's width OR its height */
+  --bw: min(340px, 52vw, 40vh);
+
+  --display: "Anton", Impact, "Arial Narrow Bold", sans-serif;
+}
+
+
+/* -----------------------------------------------------------------
+   2. BASICS
+   ----------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--bg);
+  overflow-x: hidden; /* fries/drink start off-screen; don't allow sideways scroll */
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;          /* Anton is already very bold */
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+}
+
+.accent { color: var(--gold); }
+
+/* Shared button style */
+.btn {
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(230, 59, 46, 0.4);
+}
+.btn-small { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+
+
+/* -----------------------------------------------------------------
+   3. NAV BAR
+   ----------------------------------------------------------------- */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;      /* shorthand for top:0; right:0; left:0 */
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem clamp(1rem, 4vw, 2.5rem);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.logo-star { width: 1.4em; height: 1.4em; fill: var(--gold); }
+
+
+/* -----------------------------------------------------------------
+   4. THE STAGE (the pinned section)
+   Everything inside is placed with position:absolute so layers can
+   sit on top of each other, like sheets of glass.
+   ----------------------------------------------------------------- */
+.stage {
+  position: relative;
+  height: 100vh;
+  height: 100svh;        /* "small viewport height": ignores phone toolbars */
+  min-height: 520px;
+  overflow: hidden;      /* hide the fries/drink while they're off-screen */
+  background: var(--bg);
+}
+
+/* Hero heading (Act 1) and "The Stack" heading (Act 2) share the top spot */
+.hero-copy,
+.stack-title {
+  position: absolute;
+  top: calc(4.5rem + 2vh);   /* just below the nav bar */
+  left: 0;
+  right: 0;
+  padding: 0 1rem;
+  text-align: center;
+  z-index: 5;
+}
+
+.hero-copy h1 {
+  font-size: clamp(2.6rem, 8.5vw, 6.5rem);
+  color: var(--ink);
+}
+
+.stack-title {
+  visibility: hidden;   /* script.js fades it in */
+}
+.stack-title h2 {
+  font-size: clamp(2.6rem, 8vw, 5.5rem);
+  color: var(--ink);
+}
+.stack-title p {
+  margin: 0.5rem 0 0;
+  color: var(--ink);
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+/* Order button + hint at the bottom of the hero */
+.hero-cta {
+  position: absolute;
+  bottom: 6vh;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  z-index: 5;
+}
+.scroll-hint {
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+
+/* -----------------------------------------------------------------
+   5. THE SCENE: centred box that holds the burger, fries and drink
+   ----------------------------------------------------------------- */
+.scene {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--bw);
+  transform: translate(-50%, -45%); /* centre it (slightly below middle) */
+}
+
+/* The burger is a vertical stack of layers (flexbox column) */
+.burger {
+  position: relative;
+  z-index: 2;            /* in front of the fries and drink */
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+
+.layer {
+  position: relative;
+  will-change: transform;
+}
+
+/* Every layer after the first tucks slightly under the one above it,
+   so the burger looks squashed together rather than like loose slices.
+   (A % margin is measured from the burger's width.) */
+.layer + .layer { margin-top: -3%; }
+
+/* Upper layers should be drawn IN FRONT of lower ones (e.g. cheese drips
+   over the patty). z-index controls which overlapping thing is on top. */
+.layer:nth-child(1) { z-index: 6; }
+.layer:nth-child(2) { z-index: 5; }
+.layer:nth-child(3) { z-index: 4; }
+.layer:nth-child(4) { z-index: 3; }
+.layer:nth-child(5) { z-index: 2; }
+.layer:nth-child(6) { z-index: 1; }
+
+.layer svg {
+  display: block;       /* removes a small gap that inline images get */
+  width: 100%;
+  height: auto;
+}
+
+/* Soft shadow under the whole burger (faded out by script.js during the explode) */
+.burger-shadow {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -8%;
+  height: 10%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  filter: blur(10px);
+  z-index: -1;
+}
+
+
+/* -----------------------------------------------------------------
+   6. LABELS beside each layer
+   Hidden at first; script.js fades them in during the "explode".
+   ----------------------------------------------------------------- */
+.label {
+  position: absolute;
+  top: 50%;
+  margin: 0;
+  width: max-content;
+  /* Never wider than the space beside the burger */
+  max-width: calc((100vw - var(--bw)) / 2 - 1.5rem);
+  transform: translateY(-50%);
+  font-size: clamp(0.7rem, 1.6vw, 0.95rem);
+  line-height: 1.3;
+  color: var(--ink);
+  opacity: 0.85;
+  visibility: hidden;
+}
+.label strong {
+  display: block;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.35em;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* "right" labels sit to the right of the burger, "left" ones to the left */
+.label.right { left: calc(100% + 1rem); padding-left: 1.4rem; text-align: left; }
+.label.left  { right: calc(100% + 1rem); padding-right: 1.4rem; text-align: right; }
+
+/* The small connector line pointing at the layer */
+.label::before {
+  content: "";
+  position: absolute;
+  top: 0.75em;
+  width: 1rem;
+  height: 2px;
+  background: var(--gold);
+}
+.label.right::before { left: 0; }
+.label.left::before  { right: 0; }
+
+
+/* -----------------------------------------------------------------
+   7. FRIES & DRINK
+   Positioned beside the burger, tucked slightly behind it.
+   Their slide-in from the sides is done in script.js.
+   ----------------------------------------------------------------- */
+.side {
+  position: absolute;
+  bottom: -4%;
+  z-index: 1;
+  height: auto;
+  will-change: transform;
+}
+.fries {
+  width: calc(var(--bw) * 0.5);
+  right: 86%;            /* its right edge overlaps the burger a little */
+}
+.drink {
+  width: calc(var(--bw) * 0.38);
+  left: 88%;
+}
+
+
+/* -----------------------------------------------------------------
+   8. THE LINEUP (menu)
+   ----------------------------------------------------------------- */
+.lineup {
+  background: var(--cream);
+  color: var(--brown);
+  padding: clamp(4rem, 10vw, 7rem) clamp(1rem, 4vw, 2.5rem);
+}
+
+.container {
+  max-width: 70rem;
+  margin: 0 auto;
+}
+
+.lineup h2 {
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  color: var(--brown);
+}
+.lineup-intro {
+  margin: 0.75rem 0 2.5rem;
+  max-width: 34rem;
+  font-size: 1.1rem;
+  opacity: 0.75;
+}
+
+/* auto-fill + minmax: as many 260px+ columns as fit, no media query needed */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.75rem 1.5rem 1.5rem;
+  border-radius: 18px;
+  background: #fff;
+  border: 2px solid var(--brown);
+  box-shadow: 6px 6px 0 var(--brown);   /* chunky "sticker" shadow */
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 var(--brown);
+}
+
+.card-num {
+  font-family: var(--display);
+  color: var(--red);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+}
+.card h3 { font-size: 1.9rem; }
+.card p {
+  margin: 0;
+  flex-grow: 1;          /* pushes the price to the bottom of every card */
+  opacity: 0.75;
+}
+.price {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  background: var(--gold);
+  font-weight: 800;
+}
+
+
+/* -----------------------------------------------------------------
+   9. FOOTER
+   ----------------------------------------------------------------- */
+.footer {
+  padding: 2rem 1rem;
+  text-align: center;
+  background: var(--brown);
+  color: var(--cream);
+  font-size: 0.9rem;
+}
+.footer p { margin: 0; opacity: 0.7; }
+
+
+/* -----------------------------------------------------------------
+   10. PHONES
+   ----------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .logo { font-size: 1.05rem; }
+  .label.right { left: calc(100% + 0.5rem); padding-left: 1.1rem; }
+  .label.left  { right: calc(100% + 0.5rem); padding-right: 1.1rem; }
+  .label::before { width: 0.8rem; }
+
+  /* Not enough room beside the burger on phones, so show only the bold
+     name and hide the description line underneath it */
+  .label-desc { display: none; }
+}

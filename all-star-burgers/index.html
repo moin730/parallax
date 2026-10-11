@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--
+  All Star Burgers: a scroll-driven landing page.
+  index.html = the STRUCTURE (what's on the page).
+  style.css  = the LOOK. script.js = the ANIMATION (GSAP + ScrollTrigger).
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Makes the page fit phone screens instead of shrinking a desktop layout -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Star Burgers</title>
+
+  <!-- A bold, condensed display font for headings (falls back to Impact if offline) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       NAV BAR: fixed to the top. Its text colour follows the
+       --ink variable, which the animation changes from light to dark.
+       ============================================================ -->
+  <header class="nav">
+    <a href="#top" class="logo">
+      <svg class="logo-star" viewBox="58 116 44 44" aria-hidden="true">
+        <polygon points="80,118 85.3,132.7 100.9,133.2 88.6,142.8 92.9,157.8 80,149 67.1,157.8 71.4,142.8 59.1,133.2 74.7,132.7"/>
+      </svg>
+      All&nbsp;Star&nbsp;Burgers
+    </a>
+    <a href="#lineup" class="btn btn-small">Order</a>
+  </header>
+
+  <!-- ============================================================
+       THE STAGE: the section that gets PINNED (held in place)
+       while you scroll. Everything inside it is animated by script.js.
+       ============================================================ -->
+  <section class="stage" id="top">
+
+    <!-- Act 1 text: the hero heading -->
+    <div class="hero-copy">
+      <h1>Built like an <span class="accent">All-Star</span></h1>
+    </div>
+
+    <!-- Act 2 text: hidden at first, fades in when the background turns light -->
+    <div class="stack-title" aria-hidden="true">
+      <h2>The Stack</h2>
+      <p>Six layers. Zero bench-warmers.</p>
+    </div>
+
+    <!-- The scene holds the burger plus the fries and drink beside it -->
+    <div class="scene">
+
+      <!-- FRIES: start off-screen to the left (set in script.js) -->
+      <svg class="side fries" viewBox="0 0 160 200" aria-hidden="true">
+        <g fill="#FFCF4A" stroke="#E0A21F" stroke-width="2">
+          <rect x="36" y="22" width="14" height="96" rx="3" transform="rotate(-12 43 70)"/>
+          <rect x="56" y="8"  width="14" height="110" rx="3" transform="rotate(-4 63 63)"/>
+          <rect x="76" y="2"  width="14" height="116" rx="3"/>
+          <rect x="94" y="10" width="14" height="108" rx="3" transform="rotate(6 101 64)"/>
+          <rect x="112" y="24" width="14" height="94" rx="3" transform="rotate(14 119 71)"/>
+        </g>
+        <!-- the red carton -->
+        <path d="M22 80 H138 L124 196 H36 Z" fill="#E63B2E"/>
+        <path d="M22 80 H138 L136 96 H24 Z" fill="#B8281D"/>
+        <polygon fill="#FFC22E" points="80,118 85.3,132.7 100.9,133.2 88.6,142.8 92.9,157.8 80,149 67.1,157.8 71.4,142.8 59.1,133.2 74.7,132.7"/>
+      </svg>
+
+      <!-- DRINK: starts off-screen to the right -->
+      <svg class="side drink" viewBox="0 0 120 220" aria-hidden="true">
+        <!-- striped straw -->
+        <g transform="rotate(14 76 40)">
+          <rect x="70" y="0" width="11" height="60" rx="3" fill="#FFF3DC"/>
+          <rect x="70" y="10" width="11" height="8" fill="#E63B2E"/>
+          <rect x="70" y="30" width="11" height="8" fill="#E63B2E"/>
+        </g>
+        <rect x="12" y="44" width="96" height="16" rx="7" fill="#F4EDE4"/>
+        <path d="M18 60 H102 L92 214 Q91 218 86 218 H34 Q29 218 28 214 Z" fill="#E63B2E"/>
+        <path d="M22 108 H98 L95 152 H25 Z" fill="#FFF3DC"/>
+        <g transform="translate(60 130) scale(0.75) translate(-80 -138)">
+          <polygon fill="#E63B2E" points="80,118 85.3,132.7 100.9,133.2 88.6,142.8 92.9,157.8 80,149 67.1,157.8 71.4,142.8 59.1,133.2 74.7,132.7"/>
+        </g>
+      </svg>
+
+      <!-- ==========================================================
+           THE BURGER: six separate SVG layers, top to bottom.
+           Each .layer also holds a .label that appears when the
+           burger "explodes". Labels alternate right / left.
+           ========================================================== -->
+      <div class="burger">
+
+        <div class="layer">
+          <svg viewBox="0 0 300 110" aria-hidden="true">
+            <path d="M14 100 C14 30 70 6 150 6 C230 6 286 30 286 100 Q286 108 276 108 H24 Q14 108 14 100 Z" fill="#E9A23B"/>
+            <path d="M14 94 H286 V100 Q286 108 276 108 H24 Q14 108 14 100 Z" fill="#C9812A"/>
+            <path d="M48 58 C66 32 100 20 146 18" stroke="#F7C46C" stroke-width="9" fill="none" stroke-linecap="round" opacity=".8"/>
+            <g fill="#FFF3D6">
+              <ellipse cx="96"  cy="44" rx="7" ry="3.5" transform="rotate(-25 96 44)"/>
+              <ellipse cx="140" cy="32" rx="7" ry="3.5" transform="rotate(10 140 32)"/>
+              <ellipse cx="186" cy="38" rx="7" ry="3.5" transform="rotate(25 186 38)"/>
+              <ellipse cx="226" cy="58" rx="7" ry="3.5" transform="rotate(-15 226 58)"/>
+              <ellipse cx="118" cy="66" rx="7" ry="3.5" transform="rotate(15 118 66)"/>
+              <ellipse cx="166" cy="62" rx="7" ry="3.5" transform="rotate(-30 166 62)"/>
+              <ellipse cx="70"  cy="74" rx="7" ry="3.5" transform="rotate(30 70 74)"/>
+              <ellipse cx="208" cy="80" rx="7" ry="3.5" transform="rotate(5 208 80)"/>
+            </g>
+          </svg>
+          <p class="label right"><strong>Brioche Bun</strong><span class="label-desc">Butter-toasted &amp; sesame-starred</span></p>
+        </div>
+
+        <div class="layer">
+          <svg viewBox="0 0 300 46" aria-hidden="true">
+            <path d="M10 6 H290 L288 22 H262 Q256 22 254 30 L250 40 Q248 44 245 40 L240 30 Q238 22 232 22 H150 Q144 22 142 30 L138 38 Q136 42 133 38 L128 30 Q126 22 120 22 H62 Q56 22 54 28 L51 34 Q49 38 46 34 L42 28 Q40 22 34 22 H12 Z"
+                  fill="#FFC22E" stroke="#FFC22E" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M14 8 H286" stroke="#FFDA70" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <p class="label left"><strong>Aged Cheddar</strong><span class="label-desc">Melted right to the edge</span></p>
+        </div>
+
+        <div class="layer">
+          <svg viewBox="0 0 300 56" aria-hidden="true">
+            <rect x="8" y="6" width="284" height="44" rx="22" fill="#6B3B20"/>
+            <path d="M30 14 H270" stroke="#8A5230" stroke-width="4" stroke-linecap="round"/>
+            <g fill="#4A2612">
+              <ellipse cx="60" cy="32" rx="6" ry="3"/>
+              <ellipse cx="110" cy="38" rx="5" ry="2.5"/>
+              <ellipse cx="160" cy="28" rx="7" ry="3"/>
+              <ellipse cx="210" cy="36" rx="5" ry="2.5"/>
+              <ellipse cx="250" cy="30" rx="6" ry="3"/>
+              <ellipse cx="85" cy="24" rx="4" ry="2"/>
+              <ellipse cx="190" cy="42" rx="4" ry="2"/>
+            </g>
+          </svg>
+          <p class="label right"><strong>Smash Patty</strong><span class="label-desc">100% chuck, seared crispy</span></p>
+        </div>
+
+        <div class="layer">
+          <svg viewBox="0 0 300 36" aria-hidden="true">
+            <path d="M4 16 Q19 2 34 16 T64 16 T94 16 T124 16 T154 16 T184 16 T214 16 T244 16 T274 16 T296 16
+                     L292 24 Q280 34 268 24 T244 24 T220 24 T196 24 T172 24 T148 24 T124 24 T100 24 T76 24 T52 24 T28 24 T8 24 Z"
+                  fill="#5DBB46"/>
+            <path d="M20 18 H280" stroke="#8ED96E" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+          </svg>
+          <p class="label left"><strong>Iceberg</strong><span class="label-desc">Cold, crisp crunch</span></p>
+        </div>
+
+        <div class="layer">
+          <svg viewBox="0 0 300 26" aria-hidden="true">
+            <rect x="16" y="4" width="132" height="18" rx="9" fill="#E4402F"/>
+            <rect x="152" y="4" width="132" height="18" rx="9" fill="#E4402F"/>
+            <g fill="#F7826F">
+              <ellipse cx="52" cy="13" rx="8" ry="3"/>
+              <ellipse cx="112" cy="13" rx="8" ry="3"/>
+              <ellipse cx="188" cy="13" rx="8" ry="3"/>
+              <ellipse cx="248" cy="13" rx="8" ry="3"/>
+            </g>
+          </svg>
+          <p class="label right"><strong>Vine Tomato</strong><span class="label-desc">Sliced thick, lightly salted</span></p>
+        </div>
+
+        <div class="layer">
+          <svg viewBox="0 0 300 52" aria-hidden="true">
+            <path d="M14 6 H286 Q291 6 289 14 C282 40 260 46 240 46 H60 C40 46 18 40 11 14 Q9 6 14 6 Z" fill="#E9A23B"/>
+            <path d="M14 6 H286 Q291 6 289 14 H11 Q9 6 14 6 Z" fill="#F2B85A"/>
+          </svg>
+          <p class="label left"><strong>Base Bun</strong><span class="label-desc">Holds the whole team together</span></p>
+        </div>
+
+        <!-- The soft shadow under the burger. It's a real element (not CSS
+             ::after) so script.js can fade it out while the layers are apart. -->
+        <div class="burger-shadow" aria-hidden="true"></div>
+
+      </div>
+    </div>
+
+    <!-- Act 1 button + scroll hint (bottom of the hero) -->
+    <div class="hero-cta">
+      <a href="#lineup" class="btn">Order now</a>
+      <span class="scroll-hint">Scroll to build ↓</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       THE LINEUP: a normal (not pinned) menu section.
+       ============================================================ -->
+  <section class="lineup" id="lineup">
+    <div class="container">
+      <h2>The Lineup</h2>
+      <p class="lineup-intro">Every burger is smashed to order and served on a toasted brioche bun.</p>
+
+      <!-- The grid puts 3 cards per row on desktop, 2 on tablets, 1 on phones -->
+      <div class="cards">
+        <article class="card">
+          <span class="card-num">01</span>
+          <h3>The All-Star</h3>
+          <p>Our signature smash patty, aged cheddar, lettuce, tomato and All-Star sauce.</p>
+          <span class="price">$11.50</span>
+        </article>
+        <article class="card">
+          <span class="card-num">02</span>
+          <h3>Double Header</h3>
+          <p>Two patties, two slices of cheddar, pickles and grilled onions. Built for big appetites.</p>
+          <span class="price">$14.00</span>
+        </article>
+        <article class="card">
+          <span class="card-num">03</span>
+          <h3>MVP Bacon</h3>
+          <p>Smash patty, crispy smoked bacon, cheddar and a smoky BBQ glaze.</p>
+          <span class="price">$13.50</span>
+        </article>
+        <article class="card">
+          <span class="card-num">04</span>
+          <h3>Curveball</h3>
+          <p>Pepper jack, pickled jalapeños and chipotle mayo. It brings the heat.</p>
+          <span class="price">$12.00</span>
+        </article>
+        <article class="card">
+          <span class="card-num">05</span>
+          <h3>Veggie Varsity</h3>
+          <p>A crispy black-bean patty with avocado, lettuce, tomato and lime crema.</p>
+          <span class="price">$11.00</span>
+        </article>
+        <article class="card">
+          <span class="card-num">06</span>
+          <h3>The Rookie</h3>
+          <p>A single patty with cheese and ketchup, for younger fans and lighter lunches.</p>
+          <span class="price">$8.00</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© All Star Burgers · Smashed fresh daily</p>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS: load GSAP first, then its ScrollTrigger plugin,
+       then our own script that uses them. Order matters!
+       ============================================================ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
