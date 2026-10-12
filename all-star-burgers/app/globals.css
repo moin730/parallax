@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* Theme colours. The hero blends these from food to food as you scroll
+   (FoodParallax tweens them on <html>); these are the starting pizza theme. */
+:root {
+  --bg: #f3e7d6;
+  --ink: #3b1610;
+  --accent: #c4301c;
+  --glow: rgba(196, 48, 28, 0.18);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-anton);
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Gentle entrance for menu content. Static for reduced-motion users. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+.rise {
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+}

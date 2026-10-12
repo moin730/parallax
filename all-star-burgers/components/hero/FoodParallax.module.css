@@ -1,0 +1,309 @@
+/* The pinned stage. Colours come from the theme variables on <html>, which
+   the timeline blends from food to food. */
+.stage {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  --particle-scale: 1;
+}
+
+/* Soft coloured light behind the food, tinted per theme. */
+.glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120vmin;
+  height: 120vmin;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--glow), transparent 70%);
+  pointer-events: none;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+}
+
+/* Before the timeline exists (first paint, or no JS) only the first food
+   shows; GSAP takes over these values once it builds the timeline. */
+.scene:not([data-scene="0"]) .food,
+.scene:not([data-scene="0"]) .copy,
+.scene:not([data-scene="0"]) .word,
+.scene:not([data-scene="0"]) [data-part="particle"] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ---- Giant background word -------------------------------------------- */
+.word {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: clamp(6rem, 24vw, 26rem);
+  line-height: 0.85;
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, var(--ink) 8%, transparent);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ---- The food ----------------------------------------------------------- */
+/* The slot is centred with CSS and never animated; .food inside it is
+   what GSAP moves. */
+.foodSlot {
+  position: absolute;
+  left: 56%;
+  top: 50%;
+  /* Height drives the size; width follows the photo's aspect ratio. On
+     wide screens the width is also capped so the food never runs into the
+     copy column on the left. */
+  height: min(calc(var(--size) * min(100svh, 112vw)), calc(46vw / var(--aspect)));
+  width: max-content;
+  translate: -50% -50%;
+  z-index: 3;
+}
+
+.food {
+  position: relative;
+  height: 100%;
+  will-change: transform, opacity;
+}
+
+.spin {
+  position: relative;
+  height: 100%;
+  will-change: transform;
+}
+
+.foodImg {
+  display: block;
+  height: 100%;
+  width: auto;
+  /* Tailwind's preflight caps images at 100% of their box, which squashes
+     the photo when the slot is narrower than the food. */
+  max-width: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Contact shadows are separate from the photo so they stay put while the
+   pizza spins, and so they can be tuned without re-cutting the images. */
+.shadowDisc {
+  position: absolute;
+  inset: 3%;
+  border-radius: 50%;
+  translate: 0 3.5%;
+  background: rgba(0, 0, 0, 0.42);
+  filter: blur(22px);
+}
+
+.shadowFloor {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -4%;
+  height: 11%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.18) 60%, transparent);
+  filter: blur(6px);
+}
+
+/* ---- Floating ingredients ---------------------------------------------- */
+.particleSlot {
+  position: absolute;
+  translate: -50% -50%;
+  pointer-events: none;
+}
+
+.particleSlot > div {
+  will-change: transform, opacity;
+}
+
+.particleSlot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---- Copy --------------------------------------------------------------- */
+.copy {
+  position: absolute;
+  left: clamp(1rem, 5vw, 5rem);
+  bottom: clamp(1.5rem, 8vh, 6rem);
+  z-index: 5;
+  max-width: min(24rem, 31vw);
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .foodSlot {
+    left: 62%;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: clamp(2rem, 4.2vw, 3.6rem);
+  font-weight: 400;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.blurb {
+  margin: 1rem 0 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  opacity: 0.8;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.cta {
+  display: inline-block;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -10px var(--accent);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.price {
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
+
+/* ---- Scroll hint and progress ------------------------------------------ */
+.hint {
+  position: absolute;
+  right: clamp(1rem, 5vw, 5rem);
+  bottom: clamp(1.5rem, 8vh, 6rem);
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  z-index: 5;
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: color-mix(in srgb, var(--ink) 12%, transparent);
+  z-index: 6;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* ---- Phones: food on top, copy underneath ------------------------------ */
+@media (max-width: 767px) {
+  .stage {
+    --particle-scale: 0.6;
+  }
+
+  .foodSlot {
+    left: 50%;
+    top: 36%;
+    height: calc(var(--size) * min(100svh, 112vw));
+  }
+
+  .copy {
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.75rem;
+    max-width: none;
+  }
+
+  .blurb {
+    font-size: 0.92rem;
+  }
+
+  .hint {
+    display: none;
+  }
+
+  /* The lower part of a phone screen is copy and buttons; keep it clear. */
+  .particleLow {
+    display: none;
+  }
+
+  .word {
+    bottom: 28%;
+  }
+}
+
+/* ---- Reduced motion: no pin, no movement; the foods are plain panels --- */
+@media (prefers-reduced-motion: reduce) {
+  .stage {
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Each panel gets its own theme (set inline from scenes.ts). */
+  .scene {
+    --bg: var(--scene-bg);
+    --ink: var(--scene-ink);
+    --accent: var(--scene-accent);
+    --glow: var(--scene-glow);
+    position: relative;
+    height: 100svh;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  .scene:not([data-scene="0"]) .food,
+  .scene:not([data-scene="0"]) .copy,
+  .scene:not([data-scene="0"]) .word,
+  .scene:not([data-scene="0"]) [data-part="particle"] {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .glow,
+  .hint,
+  .progress {
+    display: none;
+  }
+}

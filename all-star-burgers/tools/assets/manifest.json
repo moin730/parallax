@@ -1,0 +1,143 @@
+{
+  "pizza": {
+    "key": "pizza",
+    "path": "assets/images/foods/pizza.webp",
+    "width": 1400,
+    "height": 1397,
+    "format": "webp (alpha)",
+    "raw": "tools/assets/raw/pizza-joyosity-9138383894.jpg",
+    "processing": "rembg isnet-general-use + fitted circle",
+    "title": "Margherita pizza",
+    "creator": "joyosity",
+    "landing": "https://www.flickr.com/photos/33993074@N00/9138383894",
+    "url": "https://live.staticflickr.com/2823/9138383894_6ab8929901_o.jpg",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/"
+  },
+  "burger": {
+    "key": "burger",
+    "path": "assets/images/foods/burger.webp",
+    "width": 1400,
+    "height": 1077,
+    "format": "webp (alpha)",
+    "raw": "tools/assets/raw/burger-unsplash-E94j3rMcxlw.jpg",
+    "processing": "rembg isnet-general-use + colour decontamination",
+    "title": "Burger with lettuce and tomato (chosen by the client)",
+    "creator": "David (foodphototasty) on Unsplash",
+    "landing": "https://unsplash.com/photos/burger-with-lettuce-and-tomato-E94j3rMcxlw",
+    "url": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=2400",
+    "license": "Unsplash License",
+    "license_url": "https://unsplash.com/license"
+  },
+  "drink": {
+    "key": "drink",
+    "path": "assets/images/foods/drink.webp",
+    "width": 502,
+    "height": 895,
+    "format": "webp (alpha)",
+    "raw": "tools/assets/raw/drink-culinarygeek-5076312359.jpg",
+    "processing": "rembg isnet-general-use + studio backdrop mask + colour decontamination + glass transparency",
+    "title": "Iced Tea",
+    "creator": "TheCulinaryGeek",
+    "landing": "https://www.flickr.com/photos/72949902@N00/5076312359",
+    "url": "https://live.staticflickr.com/4044/5076312359_61d145f959_o.jpg",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/"
+  },
+  "particles:tomato": {
+    "files": [
+      {
+        "path": "assets/images/particles/tomato-02.webp",
+        "width": 64,
+        "height": 67
+      },
+      {
+        "path": "assets/images/particles/tomato-04.webp",
+        "width": 66,
+        "height": 62
+      },
+      {
+        "path": "assets/images/particles/tomato-09.webp",
+        "width": 64,
+        "height": 61
+      },
+      {
+        "path": "assets/images/particles/tomato-11.webp",
+        "width": 64,
+        "height": 66
+      },
+      {
+        "path": "assets/images/particles/tomato-16.webp",
+        "width": 69,
+        "height": 68
+      }
+    ],
+    "raw": "tools/assets/raw/particle-tomato.jpg",
+    "processing": "rembg isnet-general-use + studio backdrop mask, split into connected pieces",
+    "title": "Cherry Tomato on White Background",
+    "creator": "rawpixel (public domain collection)",
+    "landing": "https://www.rawpixel.com/image/5968931/cherry-tomato-white-background",
+    "url": "https://images.rawpixel.com/editor_1024/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvaXM3ODc0LWltYWdlLWt3eXM4ZGgzLmpwZw.jpg",
+    "license": "CC0 1.0 (as indexed by Openverse)",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  "particles:lettuce": {
+    "files": [
+      {
+        "path": "assets/images/particles/lettuce-00.webp",
+        "width": 202,
+        "height": 360
+      }
+    ],
+    "raw": "tools/assets/raw/particle-lettuce.jpg",
+    "processing": "rembg isnet-general-use + studio backdrop mask, split into connected pieces",
+    "title": "Free lettuce leaf white background",
+    "creator": "rawpixel (public domain collection)",
+    "landing": "https://www.rawpixel.com/image/5902321/photo-image-background-public-domain-green",
+    "url": "https://images.rawpixel.com/editor_1024/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvc3YxMjYxMDktaW1hZ2Uta3d2dWlpODcuanBn.jpg",
+    "license": "CC0 1.0 (as indexed by Openverse)",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  "particles:citrus": {
+    "files": [
+      {
+        "path": "assets/images/particles/citrus-03.webp",
+        "width": 95,
+        "height": 91
+      },
+      {
+        "path": "assets/images/particles/citrus-11.webp",
+        "width": 103,
+        "height": 101
+      },
+      {
+        "path": "assets/images/particles/citrus-13.webp",
+        "width": 106,
+        "height": 105
+      },
+      {
+        "path": "assets/images/particles/citrus-28.webp",
+        "width": 111,
+        "height": 113
+      },
+      {
+        "path": "assets/images/particles/citrus-09.webp",
+        "width": 194,
+        "height": 183
+      },
+      {
+        "path": "assets/images/particles/citrus-19.webp",
+        "width": 188,
+        "height": 184
+      }
+    ],
+    "raw": "tools/assets/raw/particle-citrus.jpg",
+    "processing": "rembg isnet-general-use + studio backdrop mask, split into connected pieces",
+    "title": "Grapefruit and lemon slices with rose flower petals",
+    "creator": "ProFlowers.com",
+    "landing": "https://www.flickr.com/photos/127365614@N08/15686963356",
+    "url": "https://live.staticflickr.com/8678/15686963356_11c192779a_b.jpg",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/"
+  }
+}
